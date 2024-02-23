@@ -3,7 +3,6 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-<<<<<<< HEAD
     "CourseManagementApp": {
       "projectType": "application",
       "schematics": {
@@ -17,11 +16,6 @@
           "standalone": false
         }
       },
-=======
-    "CourseManagemetApp": {
-      "projectType": "application",
-      "schematics": {},
->>>>>>> a415045eda77ba917fb44a7ecaf29f06cfbef71a
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -29,7 +23,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-<<<<<<< HEAD
             "outputPath": "dist/course-management-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -42,28 +35,6 @@
               "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
             "scripts": []
-=======
-            "outputPath": "dist/course-managemet-app",
-            "index": "src/index.html",
-            "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
-            "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
-            "scripts": [],
-            "server": "src/main.server.ts",
-            "prerender": true,
-            "ssr": {
-              "entry": "server.ts"
-            }
->>>>>>> a415045eda77ba917fb44a7ecaf29f06cfbef71a
           },
           "configurations": {
             "production": {
@@ -93,17 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-<<<<<<< HEAD
               "buildTarget": "CourseManagementApp:build:production"
             },
             "development": {
               "buildTarget": "CourseManagementApp:build:development"
-=======
-              "buildTarget": "CourseManagemetApp:build:production"
-            },
-            "development": {
-              "buildTarget": "CourseManagemetApp:build:development"
->>>>>>> a415045eda77ba917fb44a7ecaf29f06cfbef71a
             }
           },
           "defaultConfiguration": "development"
@@ -111,35 +75,16 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-<<<<<<< HEAD
             "buildTarget": "CourseManagementApp:build"
-=======
-            "buildTarget": "CourseManagemetApp:build"
->>>>>>> a415045eda77ba917fb44a7ecaf29f06cfbef71a
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-<<<<<<< HEAD
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.css"],
-=======
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
->>>>>>> a415045eda77ba917fb44a7ecaf29f06cfbef71a
             "scripts": []
           }
         }

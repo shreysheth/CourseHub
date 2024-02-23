@@ -1,0 +1,164 @@
+<!-- app.component.html -->
+
+<div class="container mt-4">
+  <!-- Searchbar -->
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <input
+        type="text"
+        class="form-control rounded-pill"
+        placeholder="Search..."
+        [(ngModel)]="searchText"
+      />
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="row m-4">
+    <!-- Left Part - List of Clickable Divs -->
+    <div class="col-6">
+      <div
+        *ngFor="let item of getItems()"
+        class="clickable-div border rounded m-2 p-3"
+        (click)="showContent(item)"
+      >
+        <div class="row">
+          <!-- Title on left top corner -->
+          <div class="col-8">
+            <h4>{{ item.courseName }}</h4>
+          </div>
+          <div class="col-4 text-end">
+            <span *ngFor="let tag of item.tags" class="badge bg-primary me-2">{{
+              tag
+            }}</span>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <!-- Author and Duration below title -->
+          <div class="col">
+            <p>by {{ item.author }} | {{ item.duration }} mins</p>
+          </div>
+          <div class="col text-end">
+            <div class="rating-stars text-warning">
+              <span
+                class="bi bi-star-fill"
+                *ngFor="let _ of getFullStars(item.rating)"
+              ></span>
+              <span
+                class="bi bi-star-half"
+                *ngIf="item.rating % 1 !== 0"
+              ></span>
+              <span
+                class="bi bi-star"
+                *ngFor="let _ of getRemainingStars(item.rating)"
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav aria-label="Page navigation">
+        <ul class="pagination mt-3">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="currentPage = currentPage - 1"
+              >&laquo;</a
+            >
+          </li>
+          <li class="page-item" *ngFor="let page of getPaginationArray()">
+            <a
+              class="page-link"
+              (click)="currentPage = page"
+              [class.active]="currentPage === page"
+              >{{ page }}</a
+            >
+          </li>
+          <li
+            class="page-item"
+            [class.disabled]="currentPage === getTotalPages()"
+          >
+            <a class="page-link" (click)="currentPage = currentPage + 1"
+              >&raquo;</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Right Part - Initially empty or with clipart -->
+    <div class="col-6">
+      <!-- Use ngIf to conditionally show content based on the clicked div -->
+      <div *ngIf="selectedItem">
+        <!-- Display content from the selected item -->
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+                {{ selectedItem.courseName }}
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">by {{ selectedItem.author }}</div>
+              <div class="col text-end">Students enrolled: {{ selectedItem.userCount }}</div>
+            </div>
+            <div class="row mt-3">
+              <div class="col">
+                Duration: {{ selectedItem.duration }} minutes
+              </div>
+              <div class="col text-warning text-end">
+                Rating:
+                <span
+                  class="bi bi-star-fill"
+                  *ngFor="let _ of getFullStars(selectedItem.rating)"
+                ></span>
+                <span
+                  class="bi bi-star-half"
+                  *ngIf="selectedItem.rating % 1 !== 0"
+                ></span>
+                <span
+                  class="bi bi-star"
+                  *ngFor="let _ of getRemainingStars(selectedItem.rating)"
+                ></span>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col">Created on: {{ selectedItem.created }}</div>
+              <div class="col text-end font-weight-light">
+                Last Activity on: {{ selectedItem.lastActivity }}
+              </div>
+            </div>
+            <div class="row mt-3">
+              <p>
+                <span font-weight-bold>Description:</span><br />
+                description heredescription heredescription heredescription
+                heredescription heredescription heredescription heredescription
+                heredescription heredescription here
+              </p>
+            </div>
+            <div class="row">
+              <div>
+                <iframe
+                  class="rounded"
+                  height="315"
+                  width="560"
+                  src="https://www.youtube.com/embed/3KtWfp0UopM?si=V_txC35MsqFWt4Hm"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <button *ngIf="!isEnrolled(selectedItem.courseId); else enrolled" class="btn btn-primary col-9" (click)="enrollUser(selectedItem.courseId, selectedItem.courseName)">Enroll</button>
+              <ng-template #enrolled>
+              <button class="btn btn-secondary col-9" disabled>Already Enrolled</button>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <!-- Use the property from your API data -->
+      </div>
+      <!-- You can replace the above line with your clipart or other content -->
+    </div>
+  </div>
+</div>

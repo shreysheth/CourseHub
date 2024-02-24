@@ -21,6 +21,8 @@
         <li class="nav-item">
           <a class="nav-link text-light" routerLink="privacy">Privacy</a>
         </li>
+
+        <!-- Users can only access courses if they are logged in -->
         <li *ngIf="isLoggedIn()" class="nav-item">
           <a class="nav-link text-light" routerLink="courses">Courses</a>
         </li>
@@ -28,6 +30,7 @@
       <button *ngIf="!isLoggedIn(); else loggedOut" class="btn btn-primary ml-auto" routerLink="login">
         Login
       </button>
+      <!-- If logged in, users cannot access login component. They have to log out first -->
       <ng-template #loggedOut>
         <button class="btn btn-primary ml-auto" routerLink="login" (click)="logOut()" >
         Logout

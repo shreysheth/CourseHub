@@ -9,8 +9,9 @@ export class TagService {
   private url = 'https://localhost:7292/api/Tags/';
   constructor(private http: HttpClient) {}
 
-  getTagByCourseId(courseId:number):Observable<any>{
-    return this.http.get<any>(this.url+courseId);
+  // Gives list of tags given to specified course - Returns list of tags (string)
+  getTagByCourseId(courseId:number):Observable<string[]>{
+    return this.http.get<string[]>(this.url+courseId);
   }
 
 }

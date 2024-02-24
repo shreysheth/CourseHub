@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CourseService } from '../course/course.service';
 import { TagService } from '../tag/tag.service';
 import { Observable, forkJoin, map, mergeMap } from 'rxjs';
+import { Course, CourseWithTags } from '../../models/course-model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,14 +13,14 @@ export class CourseTagService {
     private tagsService: TagService
   ) {}
 
-  getDateString(date:any):any{
+  getDateString(date:string):string{
     var formattedDate = new Date(date);
     return formattedDate.getDate() + '/' + formattedDate.getMonth()+'/'+formattedDate.getFullYear()+' '+formattedDate.getHours()+':'+formattedDate.getMinutes();
   }
 
-  getCourseDataWithTags(): Observable<any> {
+  getCourseDataWithTags(): Observable<CourseWithTags[]> {
     return this.courseService.getAllCourses().pipe(
-      mergeMap((courses: any[]) => {
+      mergeMap((courses: Course[]) => {
         const requests = courses.map((course) => {
           return this.tagsService.getTagByCourseId(course.courseId).pipe(
             map((tags) => {
@@ -29,11 +30,11 @@ export class CourseTagService {
                 author: course.author,
                 duration: course.duration,
                 userCount: course.userCount,
-                created: this.getDateString(course.created),
-                lastActivity: this.getDateString(course.lastActivity),
+                created: this.getDateString(course.created ?? ''),
+                lastActivity: this.getDateString(course.lastActivity ?? ''),
                 rating: course.rating,
                 tags: tags
-              };
+              }
             })
           );
         });

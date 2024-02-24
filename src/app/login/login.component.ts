@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   constructor (private userService: UserService, private router: Router){}
-  username?: string;
-  password?: string;
+  username: string = '';
+  password: string = '';
   onSubmit() {
     const user = {
       userName : this.username,
@@ -18,9 +18,8 @@ export class LoginComponent {
     };
     this.userService.login(user).subscribe(
       (response) => {
-        localStorage.setItem("Id", response.userId);
+        localStorage.setItem("Id", response.userId.toString());
         localStorage.setItem("UserName", response.userName);
-        localStorage.setItem("Password", response.userPassword);
         this.router.navigate(['courses']);  
       },
       (error) => {

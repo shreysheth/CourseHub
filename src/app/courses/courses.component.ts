@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseTagService } from '../services/combined-services/course-tag.service';
 import { CourseService } from '../services/course/course.service';
+import { Course, CourseWithTags } from '../models/course-model';
+import { User } from '../models/user-model';
 
 @Component({
   selector: 'app-courses',
@@ -12,38 +14,49 @@ export class CoursesComponent implements OnInit {
     private coursesWithTagsService: CourseTagService,
     private courseService: CourseService
   ) {}
-  apiData: any[] = [];
-  userCourses:any[] = [];
+
+  allCourses: CourseWithTags[] = []; // List of all the courses
+  userCourses: number[] = []; // List of all the courseId that logged user has been enrolled in
+
+  // To store the user for component use
+  user: User = {
+    userId: parseInt(localStorage.getItem('Id') ?? '0'),
+    userName: localStorage.getItem('UserName') ?? '',
+    userPassword: ''
+  };
+
+  selectedCourse:CourseWithTags = new CourseWithTags(); // To store the selected course from the list
+
+  // For Pagination
+  coursesPerPage: number = 4;
+  currentPage: number = 1;
+
+  // To store search string
+  searchText: string = '';
+
   ngOnInit(): void {
+    // For getting all courses
     this.coursesWithTagsService.getCourseDataWithTags().subscribe(
       (response) => {
-        this.apiData = response;
+        this.allCourses = response;
       },
       (error) => {
         console.log(error);
       }
     );
-    this.courseService.isUserEnrolled(parseInt(localStorage.getItem("Id") ?? '0')).subscribe(
+
+    // For getting all courseId of logged user
+    this.courseService.isUserEnrolled(this.user.userId).subscribe(
       (response) => {
         this.userCourses = response;
       },
-      (error)=>{
-        console.log(error);        
+      (error) => {
+        console.log(error);
       }
-    )
+    );
   }
-  selectedItem: any; // To store the selected item from the list
-  itemsPerPage: number = 4;
-  currentPage: number = 1;
-  searchText: string = '';
 
-  showContent(item: any): void {
-    // Update the selectedItem when a div is clicked
-    this.selectedItem = item;
-    console.log('div clicked');
-    console.log(item);
-    
-  }
+  // Logic for displaying rating stars
   getFullStars(rating: number): number[] {
     const fullStars = Math.floor(rating);
     return Array(fullStars).fill(0);
@@ -52,6 +65,7 @@ export class CoursesComponent implements OnInit {
   hasHalfStar(rating: number): boolean {
     return rating % 1 !== 0;
   }
+
   getRemainingStars(rating: number): number[] {
     if (this.hasHalfStar(rating)) {
       return Array(5 - (Math.floor(rating) + 1)).fill(0);
@@ -59,15 +73,9 @@ export class CoursesComponent implements OnInit {
       return Array(5 - Math.floor(rating));
     }
   }
-  getItems(): any[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const filteredData = this.apiData.filter((item) =>
-      this.searchFilter(item, this.searchText)
-    );
-    return filteredData.slice(startIndex, startIndex + this.itemsPerPage);
-  }
 
-  searchFilter(item: any, searchText: string): boolean {
+  // Search functionality
+  searchFilter(course: CourseWithTags, searchText: string): boolean {
     const searchKeywords = searchText
       .split(' ')
       .filter((keyword) => keyword.trim() !== '');
@@ -75,15 +83,26 @@ export class CoursesComponent implements OnInit {
       keyword.toLowerCase()
     );
 
-    // Check if any of the properties match any of the search keywords
     return searchLowerKeywords.every(
       (keyword) =>
-        item.courseName.toLowerCase().includes(keyword) ||
-        item.author.toLowerCase().includes(keyword) ||
-        item.duration.toString().includes(keyword) ||
-        item.tags.some((tag: string) => tag.toLowerCase().includes(keyword)) ||
-        item.rating.toString().includes(keyword)
+        course.courseName.toLowerCase().includes(keyword) ||
+        course.author.toLowerCase().includes(keyword) ||
+        course.duration.toString().includes(keyword) ||
+        course.tags.some((tag: string) => tag.toLowerCase().includes(keyword)) ||
+        course.rating.toString().includes(keyword)
     );
+  }
+
+  // For Pagination - displays list of specified number of courses on one page
+  getCoursesPerPage(): CourseWithTags[] {
+    const startIndex = (this.currentPage - 1) * this.coursesPerPage;
+
+    // using filtered data instead of actual data to update pagination based on search results
+    const filteredData = this.allCourses.filter((item) =>
+      this.searchFilter(item, this.searchText)
+    );
+
+    return filteredData.slice(startIndex, startIndex + this.coursesPerPage);
   }
 
   getPaginationArray(): number[] {
@@ -92,28 +111,43 @@ export class CoursesComponent implements OnInit {
   }
 
   getTotalPages(): number {
-    const filteredData = this.apiData.filter((item) =>
+    const filteredData = this.allCourses.filter((item) =>
       this.searchFilter(item, this.searchText)
     );
-    return Math.ceil(filteredData.length / this.itemsPerPage);
+    return Math.ceil(filteredData.length / this.coursesPerPage);
   }
 
+  // For displaying course content on right
+  showContent(course: CourseWithTags): void {
+    this.selectedCourse = course;
+  }
+
+  // To check if user is enrolled in the given course or not
   isEnrolled(courseId: number): boolean {
     return this.userCourses.includes(courseId);
   }
-  enrollUser(courseId:number, courseName:string){
-    this.courseService.addUserToCourse({
-      courseId: courseId,
-      userId: parseInt(localStorage.getItem('Id') ?? '0'),
-    }).subscribe(
-      (response) =>{
-        var username = localStorage.getItem("UserName");
-        alert('Congratulations ' + username + '!! You have been successfully enrolled to '+ courseName + ' course. Happy Learning :)');
-        location.reload();
-      },
-      (error) => {
-        console.log(error);      
-      }
-    );
+
+  // To enroll a user in a given course
+  enrollUser(courseId: number, courseName: string) {
+    this.courseService
+      .addUserToCourse({
+        courseId: courseId,
+        userId: this.user.userId,
+      })
+      .subscribe(
+        (response) => {
+          alert(
+            'Congratulations ' +
+              this.user.userName +
+              '!! You have been successfully enrolled to ' +
+              courseName +
+              ' course. Happy Learning :)'
+          );
+          location.reload();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 }

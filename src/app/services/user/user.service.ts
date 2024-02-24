@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { LoginUser, User } from '../../models/user-model';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,8 @@ export class UserService {
   private url = 'https://localhost:7292/api/Users/';
   constructor(private http: HttpClient) {}
 
-  login(user:any):Observable<any>{
-    return this.http.post<any>(this.url+"login", user);
+  // Checks if user is registered or not - returns user (object)
+  login(user:LoginUser):Observable<User>{
+    return this.http.post<User>(this.url+"login", user);
   }
 }

@@ -102,6 +102,10 @@ export class CoursesComponent implements OnInit {
       this.searchFilter(item, this.searchText)
     );
 
+    if (!filteredData.includes(this.selectedCourse)) {
+      this.selectedCourse = null;
+    }
+
     return filteredData.slice(startIndex, startIndex + this.coursesPerPage);
   }
 

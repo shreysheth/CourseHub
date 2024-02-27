@@ -25,7 +25,7 @@ export class CoursesComponent implements OnInit {
     userPassword: ''
   };
 
-  selectedCourse:CourseWithTags = new CourseWithTags(); // To store the selected course from the list
+  selectedCourse:any; // To store the selected course from the list
 
   // For Pagination
   coursesPerPage: number = 4;

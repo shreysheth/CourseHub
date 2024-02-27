@@ -18,7 +18,7 @@
     <div class="col-6">
       <div
         *ngFor="let course of getCoursesPerPage()"
-        class="clickable-div border rounded m-2 p-3"
+        class="clickable-div border rounded m-2 p-3 courses"
         (click)="showContent(course)"
       >
         <!-- Individual course -->
@@ -27,9 +27,11 @@
             <h4>{{ course.courseName }}</h4>
           </div>
           <div class="col-4 text-end">
-            <span *ngFor="let tag of course.tags" class="badge bg-primary me-2">{{
-              tag
-            }}</span>
+            <span
+              *ngFor="let tag of course.tags"
+              class="badge bg-primary me-2"
+              >{{ tag }}</span
+            >
           </div>
         </div>
         <div class="row mt-3">
@@ -56,7 +58,10 @@
         </div>
       </div>
       <!-- Pagination for courses -->
-      <nav aria-label="Course navigation">
+      <nav
+        *ngIf="getCoursesPerPage().length != 0"
+        aria-label="Course navigation"
+      >
         <ul class="pagination mt-3">
           <li class="page-course" [class.disabled]="currentPage === 1">
             <a class="page-link" (click)="currentPage = currentPage - 1"
@@ -88,7 +93,7 @@
       <div *ngIf="selectedCourse">
         <div class="card">
           <div class="card-header">
-            <div class="row">
+            <div class="row ms-1">
               {{ selectedCourse.courseName }}
             </div>
           </div>
@@ -142,6 +147,7 @@
                 <iframe
                   class="rounded"
                   height="315"
+                  width="560"
                   src="https://www.youtube.com/embed/3KtWfp0UopM?si=V_txC35MsqFWt4Hm"
                   title="YouTube video player"
                   frameborder="0"
@@ -162,9 +168,9 @@
                 Enroll
               </button>
               <ng-template #enrolled>
-                <button class="btn btn-secondary col-9 disabled" disabled>
+                <li class="btn btn-secondary col-9 enrolled">
                   Already Enrolled
-                </button>
+                </li>
               </ng-template>
             </div>
           </div>

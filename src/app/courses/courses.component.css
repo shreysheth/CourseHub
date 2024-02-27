@@ -1,4 +1,8 @@
+.disabled,
+.enrolled {
+  cursor: not-allowed !important;
+}
 .page-link,
-.disabled {
+.courses {
   cursor: pointer;
 }

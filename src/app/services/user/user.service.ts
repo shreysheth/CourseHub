@@ -7,11 +7,11 @@ import { LoginUser, User } from '../../models/user-model';
   providedIn: 'root',
 })
 export class UserService {
-  private url = 'https://localhost:7292/api/Users/';
+  private url = 'https://www.coursehub.somee.com/api/Users/';
   constructor(private http: HttpClient) {}
 
   // Checks if user is registered or not - returns user (object)
-  login(user:LoginUser):Observable<User>{
-    return this.http.post<User>(this.url+"login", user);
+  login(user: LoginUser): Observable<User> {
+    return this.http.post<User>(this.url + 'login', user);
   }
 }

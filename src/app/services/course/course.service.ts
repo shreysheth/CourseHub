@@ -8,7 +8,7 @@ import { CourseUser } from '../../models/combined-models/course-user-model';
   providedIn: 'root',
 })
 export class CourseService {
-  private url = 'https://localhost:7292/api/Courses/';
+  private url = 'https://www.coursehub.somee.com/api/Courses/';
   constructor(private http: HttpClient) {}
 
   // Get all courses - returns list of courses (object)
@@ -22,8 +22,7 @@ export class CourseService {
   }
 
   // Getting list of courses given user has enrolled in - returns list of courseId (number)
-  isUserEnrolled(userId:number):Observable<number[]>{
+  isUserEnrolled(userId: number): Observable<number[]> {
     return this.http.get<number[]>(this.url + 'isEnrolled/' + userId);
   }
-  
 }

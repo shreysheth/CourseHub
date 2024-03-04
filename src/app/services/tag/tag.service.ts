@@ -6,12 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TagService {
-  private url = 'https://localhost:7292/api/Tags/';
+  private url = 'https://www.coursehub.somee.com/api/Tags/';
   constructor(private http: HttpClient) {}
 
   // Gives list of tags given to specified course - Returns list of tags (string)
-  getTagByCourseId(courseId:number):Observable<string[]>{
-    return this.http.get<string[]>(this.url+courseId);
+  getTagByCourseId(courseId: number): Observable<string[]> {
+    return this.http.get<string[]>(this.url + courseId);
   }
-
 }

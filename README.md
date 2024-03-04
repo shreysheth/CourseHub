@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-# CourseManagementApp
-=======
+
 # CourseManagemetApp
->>>>>>> a415045eda77ba917fb44a7ecaf29f06cfbef71a
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.0.
 

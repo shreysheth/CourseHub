@@ -1,28 +1,79 @@
+**CourseHub: Empowering Educators, Equipping Learners**
 
-# CourseManagemetApp
+**Project Overview**
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.0.
+CourseHub is a web-based platform designed to bridge the gap between educators and learners. It offers a streamlined platform for teachers to upload and manage their courses, while allowing students to discover, enroll, and access enriching educational content.
 
-## Development server
+**Key Features**
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+* **Course Management System (CMS) for Teachers:**
+    * Intuitive Angular UI for effortless course creation and management.
+    * Upload various course materials, including videos, documents, presentations, and more.
+    * Structure courses with modules and lessons for organized learning.
+    * Set access permissions and manage student enrollment.
+* **Learning Management System (LMS) for Students:**
+    * User-friendly interface for course discovery and enrollment.
+    * Access a diverse range of courses from various educators.
+    * Progress through course modules at their own pace.
+    * Track learning progress and achievements.
+* **Robust Backend (ASP.NET Core and SQL Server):**
+    * Secure and scalable infrastructure to handle growing user base and course content.
+    * Efficient data management using SQL Server for a seamless user experience.
+    * RESTful API for potential integrations with mobile apps or other platforms (future development).
 
-## Code scaffolding
+**Technologies Used**
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* Frontend: Angular (for a dynamic and interactive user interface)
+* Backend: ASP.NET Core (for robust server-side logic and API development)
+* Database: SQL Server (for efficient data storage and retrieval)
 
-## Build
+**Getting Started**
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. **Prerequisites:**
+    * Node.js and npm (or yarn) installed on your system.
+    * A code editor or IDE of your choice (e.g., Visual Studio Code, WebStorm).
+    * Basic understanding of Angular, ASP.NET Core, and SQL Server concepts.
 
-## Running unit tests
+2. **Clone the Repository:**
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+   ```bash
+   git clone https://github.com/shreysheth/coursehub.git
+   ```
 
-## Running end-to-end tests
+3. **Install Dependencies:**
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+   ```bash
+   cd coursehub
+   npm install  # or yarn install
+   ```
 
-## Further help
+4. **Configure Database Connection:**
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+   - Update the connection string in the `appsettings.json` file (backend) to point to your SQL Server instance.
+
+5. **Run the Application:**
+
+   - Start the backend server:
+     ```bash
+     dotnet run
+     ```
+   - Navigate to `http://localhost:<port number>` (e.g., http://localhost:5000) in your browser to access the CourseHub application.
+
+**Contributing**
+
+We welcome contributions from the community! To contribute, please:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Implement your changes and write clear code comments.
+4. Submit a pull request for review.
+
+**License**
+
+This project is licensed under the MIT License: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT).
+
+**Additional Notes**
+
+* This README provides a high-level overview. Refer to the codebase for more detailed implementation specifics.
+* Security considerations and best practices should be incorporated during development and deployment.
+* Consider continuous integration and deployment (CI/CD) for streamlining the development process.
